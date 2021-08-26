@@ -11,7 +11,10 @@ def display_img(image_data, figsize = (16,9), cmap = 'gray'):
 
 
 def show_box_with_circle(box_data, box_idx, circle_coordinates, idx2inspect = None):
-
+    '''
+    Docstring @TODO
+    '''
+    
     if idx2inspect is None:
         idx2inspect = np.random.randnint(len(box_idx))
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharex=True, sharey=True)

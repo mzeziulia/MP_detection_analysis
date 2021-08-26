@@ -3,6 +3,9 @@ from skimage.feature import canny
 from skimage.transform import hough_circle, hough_circle_peaks
 
 def extract_boxes(img_data, coordinates_list, dims):
+    '''
+    Docstring @TODO
+    '''
 
     all_boxes = []
     for center_i in coordinates_list:
@@ -14,6 +17,9 @@ def extract_boxes(img_data, coordinates_list, dims):
     return all_boxes
 
 def hough_circle_finder(extracted_boxes, num_peaks_to_find, hough_radii, sigma = 4, low_threshold=0, high_threshold=100):
+    '''
+    Docstring @TODO
+    '''
 
     hough_res=[]
     num_boxes = len(extracted_boxes)
@@ -27,6 +33,9 @@ def hough_circle_finder(extracted_boxes, num_peaks_to_find, hough_radii, sigma =
     return hough_res     
 
 def filter_circles(all_circles, num_peaks_to_find, dims, center_deviation_tolerance = 3, near_center_threshold = 4, radius_pct = 85):
+    '''
+    Docstring @TODO
+    '''
 
     center_coord = [dims[0]/2, dims[1]/2] # coordinate of the center of each box (in box-relative coordinates)
     good_circles = []
@@ -58,7 +67,10 @@ def filter_circles(all_circles, num_peaks_to_find, dims, center_deviation_tolera
     return good_circles, box_idx
 
 def show_box_with_circle(box_data, box_idx, circle_coordinates, idx2inspect = None):
-
+    '''
+    Docstring @TODO
+    '''
+    
     if idx2inspect is None:
         idx2inspect = np.random.randnint(len(box_idx))
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharex=True, sharey=True)

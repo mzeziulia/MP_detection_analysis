@@ -2,7 +2,10 @@ import cv2
 import numpy as np
 
 def create_contour_mask(imdata, contours, pts_threshold = 700):
-
+    '''
+    Docstring @TODO
+    '''
+    
     contour_mask = np.zeros(imdata.shape, dtype=bool)
     # For each list of contour points...
     for i in range(len(contours)):
@@ -18,6 +21,9 @@ def create_contour_mask(imdata, contours, pts_threshold = 700):
     return contour_mask
 
 def create_cell_masks(imdata, contours, pts_threshold = 700):
+    '''
+    Docstring @TODO
+    '''
 
     all_masks = np.zeros(imdata.shape, dtype=bool)[:,:,np.newaxis]
     # For each list of contour points...
