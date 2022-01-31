@@ -1,23 +1,17 @@
-from config import *
-import circle_finding_functions as crcl
-import contour_and_cell_mask_functions as mask
-import plotting_and_parameters_readout_functions as stats
-from analysis_methods import run_analysis_X_way, run_analysis_Y_way, run_analysis_Z_way
 
-last_frame = int(input("last_frame"))
-first_frame = int(input("first_frame"))
+from analysis_methods.volume_measurement.analysis import run_volume_measurement
+# from analysis_methods.pH_measurement.analysis import run_pH_measurement
 
-conditions = []
-question = 'yes'
-i=0
+date_dir = input ('Data source directory') # data sourse
+last_frame = int(input("Last frame intiger number")) # last frame
+first_frame = int(input("First frame intiger number")) # first frame
 
-while question == 'yes':
-   conditions.append(input('name_of_condition'))
-   question =  input("Are there other conditions? Type yes or no")
-   i=i+1
+conditions_entry = input ('Enter condition names separated space') # list of conditions
+conditions = list(map(int,conditions_entry.split(' ')))
 
+analysis_type = input ('Type of analusis: enter "volume" or "pH"') # Analyze volume or pH
 
-if keyword_arg1 == X:
-   run_analysis_X_way()
-elif keyword_arg2 == Y:
-   run_analysis_Y_way()
+if analysis_type == 'volume':
+   run_volume_measurement(date_dir, last_frame, first_frame, conditions)
+# elif analysis_type == 'pH':
+#    run_pH_measurement(date_dir, last_frame, first_frame, conditions)
