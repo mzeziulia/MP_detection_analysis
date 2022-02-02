@@ -43,7 +43,8 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
     
     for condition in conditions:
         csv_name = os.path.join(date_dir,'pH_%s.csv'%condition)
-        row_list = [['Filename', '5min radius', '6min radius', '7min radius', '8min radius', '9min radius', '10min radius', '11min radius', '12min radius', '13min radius', '14min radius', '15min radius', '5min intensity', '6min intensity', '7min intensity', '8min intensity', '9min intensity', '10min intensity', '11min intensity', '12min intensity', '13min intensity', '14min intensity', '15min intensity']]
+        title_row_list = [['Filename', '5min radius', '6min radius', '7min radius', '8min radius', '9min radius', '10min radius', '11min radius', '12min radius', '13min radius', '14min radius', '15min radius', '5min intensity', '6min intensity', '7min intensity', '8min intensity', '9min intensity', '10min intensity', '11min intensity', '12min intensity', '13min intensity', '14min intensity', '15min intensity']]
+
         for tif_file in glob.glob(os.path.join(date_dir,'*%s*'%condition)):
 
             cell_cropped_fullstack = io.imread(tif_file) # Read the image
@@ -113,20 +114,11 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
                 if img_16bit_cleaned[int(y), int(x)] > 0: # this makes sure you only include blobs whose center pixel is on the mask  
                     blobs_list.append((y,x))
 
-            # fig, axes = plt.subplots(1, 2, figsize=(16, 9), sharex=True, sharey=True)
-            # ax = axes.ravel()
-            # ax[0].imshow(img_16bit, cmap = 'gray', interpolation = 'bicubic')
-            # ax[1].imshow(img_16bit, cmap = 'gray', interpolation = 'bicubic')
-            # for filtered_blob in blobs_list:
-            #     y, x = filtered_blob
-            #     c = plt.Circle((x, y), 10, color='red', linewidth=2, fill=False)
-            #     ax[1].add_patch(c)
-
             ### Crop images into 50x50 boxes around each macropinosome center detected with blob_dog and finding edges within each box. ### 
             ### Macropinosome is true if at least 1 of detected circles lies less than or equal to 5 pixels ###
 
             bounding_box_dims = [50, 50] # set the height and width of your bounding box
-            all_boxes = utilities.extract_boxes(img_16bit, blobs_list, bounding_box_dims)
+            all_boxes = utilities.extract_boxes(img_16bit, blobs_list, bounding_box_dims, max_x, max_y)
 
             num_circles_to_find = 7
             hough_radii = np.arange(3, 35)
@@ -164,7 +156,7 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
             final_radii[last_frame-first_frame]=radii
             final_intensities_YFP[last_frame-first_frame]=intensities
 
-            intensities_FRET=compute_cell_statistics(cell_cropped_fullstack[last_frame,FRET_channel,:,:],good_circles_original_info)
+            intensities_FRET=utilities.compute_cell_statistics(cell_cropped_fullstack[last_frame,FRET_channel,:,:],good_circles_original_info)
             final_intensities_FRET[last_frame-first_frame]=intensities_FRET
 
 
@@ -209,7 +201,7 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
                 gimage_8bit_contours = cv2.drawContours(gimage_8bit_thr, contours, -1, (0, 255, 0), 3)
                 # utilities.display_img(gimage_8bit_contours)
 
-                img_binar = create_contour_mask(img_16bit, contours, pts_threshold = 800)
+                img_binar = utilities.create_contour_mask(img_16bit, contours, pts_threshold = 800)
                 # utilities.display_img(img_binar)
 
                 img_16bit_cleaned = img_16bit.copy()
@@ -233,7 +225,7 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
                 #     ax[1].add_patch(c)
 
                 bounding_box_dims = [50, 50] 
-                all_boxes_next = utilities.extract_boxes(img_16bit, blobs_list, bounding_box_dims) #boxes based on coordinates of blobs in frame 5
+                all_boxes_next = utilities.extract_boxes(img_16bit, blobs_list, bounding_box_dims, max_x, max_y) #boxes based on coordinates of blobs in frame 5
                 num_circles_to_find = 7
                 hough_radii = np.arange(3, 35)
                 hough_res_next = utilities.hough_circle_finder(all_boxes_next, num_circles_to_find, hough_radii, sigma = 4, low_threshold=0, high_threshold=100)
@@ -324,4 +316,5 @@ def run_pH_measurement (date_dir, last_frame, first_frame, conditions, backgroun
             ### Writing data in csv ###
             with open(csv_name, 'a', newline='') as file:
                 writer = csv.writer(file)
+                writer.writerows(title_row_list)
                 writer.writerows(row_list)

@@ -19,7 +19,7 @@ if analysis_type == 'volume':
    run_volume_measurement(dir, last, first, conditions_list)
 elif analysis_type == 'pH':
    background = float(input("Background percentile, for current analysis we use 2"))
-   YFP_c = int(input("Number ID of pH-sensitive channel"))
-   FRET_c = int(input("Number ID of pH-insensitive channel used for naormalization"))
+   YFP_c = int(input("Number ID of pH-sensitive channel; used for macropinosome search (counting starts with 0)"))
+   FRET_c = int(input("Number ID of pH-insensitive channel used for normalization (counting starts with 0)"))
 
    run_pH_measurement(dir, last, first, conditions_list, background, YFP_c, FRET_c)

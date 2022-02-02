@@ -37,7 +37,8 @@ def run_volume_measurement (date_dir, last_frame, first_frame, conditions):
 
     for condition in conditions:
         csv_name = os.path.join(date_dir,'volume_%s.csv'%condition)
-        row_list = [['Filename', '5min radius', '6min radius', '7min radius', '8min radius', '9min radius', '10min radius', '11min radius', '12min radius', '13min radius', '14min radius', '15min radius', '5min intensity', '6min intensity', '7min intensity', '8min intensity', '9min intensity', '10min intensity', '11min intensity', '12min intensity', '13min intensity', '14min intensity', '15min intensity']]
+        title_row_list = [['Filename', '5min radius', '6min radius', '7min radius', '8min radius', '9min radius', '10min radius', '11min radius', '12min radius', '13min radius', '14min radius', '15min radius', '5min intensity', '6min intensity', '7min intensity', '8min intensity', '9min intensity', '10min intensity', '11min intensity', '12min intensity', '13min intensity', '14min intensity', '15min intensity']]
+            
         for tif_file in glob.glob(os.path.join(date_dir,'*%s*'%condition)):
 
             cell_cropped_fullstack = io.imread(tif_file) # Read the image
@@ -287,5 +288,6 @@ def run_volume_measurement (date_dir, last_frame, first_frame, conditions):
             ### Writing data in csv ###
             with open(csv_name, 'a', newline='') as file:
                 writer = csv.writer(file)
+                writer.writerows(title_row_list)
                 writer.writerows(row_list)
 
