@@ -13,7 +13,7 @@ if conditions_number > 1:
 else:
    conditions_list = [conditions_entry]
 
-analysis_type = input ('Type of analusis: enter "volume" or "pH"') # Analyze volume or pH
+analysis_type = input ('Type of analysis: enter "volume" or "pH"') # Analyze volume or pH
 
 if analysis_type == 'volume':
    run_volume_measurement(dir, last, first, conditions_list)
