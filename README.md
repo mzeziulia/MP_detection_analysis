@@ -39,6 +39,10 @@ In the csv file output for "volume" mode the sequence of colums is radii for eac
 
 In the csv file output for "pH" mode the sequence of colums is:
 
-1) radii for each time step; 2) mean fluorescent intensities at pH-sensitive wavelength at each time step; 3) background values for pH-sensitive wavelength at each time step; 4) mean fluorescent intensities at pH-insensitive wavelength at each time step; 5) background values for pH-insensitive wavelength at each time step.
+1) radii for each time step; 
+2) mean fluorescent intensities at pH-sensitive wavelength at each time step; 
+3) background values for pH-sensitive wavelength at each time step; 
+4) mean fluorescent intensities at pH-insensitive wavelength at each time step; 
+5) background values for pH-insensitive wavelength at each time step.
 
 Every step in image analysis has a plotting function included, which is commented out.
