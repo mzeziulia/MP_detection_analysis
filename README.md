@@ -1,6 +1,6 @@
 # Macropinosome tracking (volume and pH measurement) repo
 
-Companion repository for "Proton-gated anion transport governs endocytic vacuole shrinkage" by Mariia Zeziulia, Sandy Blin, Franziska W. Schmitt, Martin Lehmann, Thomas J. Jentsch
+Companion repository for "Proton-gated anion transport governs macropinosome shrinkage" by Mariia Zeziulia, Sandy Blin, Franziska W. Schmitt, Martin Lehmann, Thomas J. Jentsch
 
 # Installation 
 
